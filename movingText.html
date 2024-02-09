@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rohan Kumar</title>
+    <link rel="stylesheet" href="/assets/css/segments.css" />
+    <style>
+      .scrolling-text {
+        position: relative;
+        white-space: nowrap;
+        animation: scroll-left 20s linear infinite;
+      }
+
+      @keyframes scroll-left {
+        from {
+          left: 100%;
+          width: 100%;
+        }
+        to {
+          left: -100%;
+          width: 100%;
+        }
+      }
+    </style>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <!-- Include Header -->
+    <!-- Include Header -->
+    <div id="header-container"></div>
+    <div id="navbar-container"></div>
+    <!-- Main Container -->
+    <main class="main-container">
+      <section>
+          <button onclick="increment()">up</button>
+          <button onclick="decrement()">down</button>
+          <span id="count"></span>
+        </div>
+        <div id="scrolling-text" class="scrolling-text">
+          Scrolling text!
+        </div>
+      </section>
+    </main>
+    <script> 
+    // const element = document.getElementById("count");
+    // // console.log("element :", element);
+    // function updateTime() {
+    //   // console.log("element :", element);
+    //   let currentTime = new Date();
+    //   let h = currentTime.getHours();
+    //   let m = currentTime.getMinutes();
+    //   let s = currentTime.getSeconds();
+    //   const time = `${h}:${m}:${s}`;
+    //   console.log("time :", time);
+    //   element.textContent = time;
+    //   setTimeout(updateTime, 2000);
+    // }
+    // updateTime();
+    function scrollLeft() {
+      document.getElementById("scrolling-text").style.left = "100%"
+      setTimeout(scrollLeft, 25);
+    }
+    scrollLeft();
+    </script>
+  </body>
+</html>
