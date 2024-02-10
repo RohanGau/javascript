@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rohan Kumar</title>
+    <link rel="stylesheet" href="/assets/css/segments.css" />
+    <style>
+      .go {
+        color: green;
+      }
+      .stop {
+        color: red;
+      }
+    </style>
+    <!-- <script src="index.js"></script> -->
+  </head>
+  <body>
+    <!-- Include Header -->
+    <!-- Include Header -->
+    <div id="header-container"></div>
+    <div id="navbar-container"></div>
+    <!-- Main Container -->
+    <main class="main-container">
+      <section>
+        <button onclick="start()">start</button>
+        <button onclick="stop()">stop</button>
+        <span id="count"></span>
+        <div id="scrolling-text">Scrolling text!</div>
+      </section>
+    </main>
+    <script>
+      const element = document.getElementById("scrolling-text");
+      let count = 1;
+      function callbackFunction(color) {
+        console.log("count :", count);
+        element.style.color = count % 2 === 0 ? "red" : "green";
+        count++;
+      }
+      let interval;
+      function start() {
+        if (!interval) {
+          interval = setInterval(callbackFunction, 1000);
+        }
+      }
+
+      function stop() {
+        count = 1;
+        clearInterval(interval);
+        interval = null;
+      }
+    </script>
+  </body>
+</html>
