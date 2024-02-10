@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rohan Kumar</title>
+    <link rel="stylesheet" href="/assets/css/segments.css" />
+    <style>
+      .go {
+        color: green;
+      }
+      .stop {
+        color: red;
+      }
+    </style>
+    <!-- <script src="index.js"></script> -->
+  </head>
+  <body>
+    <!-- Include Header -->
+    <!-- Include Header -->
+    <div id="header-container"></div>
+    <div id="navbar-container"></div>
+    <!-- Main Container -->
+    <main class="main-container">
+      <section>
+        <button onclick="start()">start</button>
+        <button onclick="stop()">stop</button>
+        <span id="result"></span>
+      </section>
+    </main>
+    <script>
+      let pollingId;
+      let pollingDelay = 1000;
+      function startPolling() {
+        const resultText =
+          Math.random() >= 0.5 ? "New data available" : "No data available";
+        console.log("resultText :", resultText);
+        let pollingTextElement = document.getElementById("result");
+        pollingTextElement.textContent = resultText;
+        pollingId = setTimeout(startPolling, pollingDelay);
+      }
+      function start() {
+        if (!pollingId) {
+          startPolling();
+        }
+      }
+
+      function stop() {
+        clearInterval(pollingId);
+        pollingId = null;
+      }
+    </script>
+  </body>
+</html>
