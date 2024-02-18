@@ -25,3 +25,88 @@ multipleByTwo(5);
 // function curring using closure
 let multiplyByFour = closureMultiply(4);
 multiplyByFour(8);
+
+function sum(a) {
+  return function (b) {
+    return function (c) {
+      return a + b + c;
+    };
+  };
+}
+
+const sum1 = sum(4)(5)(8);
+console.log(sum1);
+
+function sendRequest(greet) {
+  return function (name) {
+    return function (message) {
+      return greet + " " + name + " " + message;
+    };
+  };
+}
+
+const result = sendRequest("Hello")("Rohan")(
+  "you add me to your linkdin network"
+);
+
+// modern technique in currying method
+const sendRequestModern = (greet) => (name) => (message) =>
+  greet + " " + name + " " + message;
+const result2 = sendRequest("Hello")("Gaurav")(
+  "you add me to your linkdin network"
+);
+
+console.log("result2 :", result2);
+
+function curry(func) {
+  return function carried(...args) {
+    if (args.length >= func.length) return func.apply(this, args);
+    else {
+      return function (...args2) {
+        console.log("args2 :", args2, args.concat(args2));
+        return carried.apply(this, args.concat(args2));
+      };
+    }
+  };
+}
+
+function commonSum(a, b, c) {
+  return a + b + c;
+}
+
+let carriedSum = curry(commonSum);
+// console.log(carriedSum(1, 2, 3));
+// console.log(carriedSum(1)(2, 3));
+// console.log(carriedSum(1)(2)(4));
+
+let recursionSum = function (a) {
+  return function (b) {
+    if (b) {
+      return sum(a + b);
+    }
+    return a;
+  };
+};
+
+const ans = recursionSum(10)(20)(39)(87);
+
+console.log("recursion function :", ans);
+
+function add(...args) {
+  let sum = args.reduce((a, b) => a + b, 2); // Initialize sum to 0
+
+  function innerAdd(...innerArgs) {
+    if (innerArgs.length === 0) {
+      // If no more arguments, return sum
+      return sum;
+    }
+    sum += innerArgs.reduce((a, b) => a + b, 0); // Add the new set of arguments to sum
+    return innerAdd; // Return innerAdd function for further chaining
+  }
+
+  return innerAdd(...args); // Call innerAdd with initial arguments
+}
+
+let recursionAdd = add(2, 3);
+console.log("recursionAdd:", recursionAdd());
+
