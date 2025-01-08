@@ -110,3 +110,47 @@ function add(...args) {
 let recursionAdd = add(2, 3);
 console.log("recursionAdd:", recursionAdd());
 
+
+
+// partial application pre fill some arguments and reuse the partially applied function
+
+const multiply = (a, b) => a * b;
+const curriedMutliply = curry(multiply);
+
+const double = curriedMutliply(2);
+console.log("double :", double(3));
+
+// dynamic arguments length
+function dynamicCurry(func) {
+    const curried = (...args) => {
+        const next = (...args2) => {
+            if(args2.length === 0) {
+                return func(...args);
+            }
+            return curried(...args, ...args2);
+        }
+        return next;
+    }
+    return curried;
+}
+
+
+
+const add = (...nums) => nums.reduce((sum, n) => sum + n, 0);
+
+const curriedAdd = dynamicCurry(add);
+console.log("dyamic", curriedAdd(1, 2)(3, 5)(5)());
+console.log("dyamic", curriedAdd()());
+
+
+// reusability in functional pipelines
+const compose = (...fns) => (args) => fns.reduceRight((result, fn) => fn(result), args);
+
+const add1 = (x) => x + 1
+const double = (x) => x * 2;
+
+const addThenDouble = compose(double, add1);
+console.log(addThenDouble(5));
+
+
+
