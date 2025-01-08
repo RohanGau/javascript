@@ -153,4 +153,47 @@ const addThenDouble = compose(double, add1);
 console.log(addThenDouble(5));
 
 
+// placeholder logic
+
+function curry(fn) {
+    const placeholder = curry.placeholder;
+    // return function curried(...args) {
+    //     const enoughArgs = args.filter(arg => arg !== placeholder).length >= fn.length;
+    //     if(enoughArgs) {
+    //         return fn(...args);
+    //     } else {
+    //         return function(...args2) {
+    //             const newArgs = args.map((arg) => {
+    //                 if(arg === placeholder) {
+    //                     if(args2.length !== 0) {
+    //                         return args2.shift();
+    //                     }
+    //                 }
+    //                 return arg;
+    //             })
+    //             console.log("newArgs :", newArgs);
+    //             return curried(...newArgs, ...args2);
+                
+    //         }
+    //     }
+    // }
+    
+    const curried = (...args) => {
+        const enoughArgs = args.slice(0, 3).filter(arg => arg !== placeholder).length >= fn.length;
+        if(enoughArgs) {
+          return fn(...args);
+        } else {
+          const next = (...args2) => {
+            const newArgs = args.map(arg => arg === placeholder && args2.length ? args2.shift() : arg);
+            // console.log("newArgs :", newArgs);
+            return curried(...newArgs, ...args2);
+          }
+          return next;
+        }
+      }
+      return curried;
+}
+
+
+
 
