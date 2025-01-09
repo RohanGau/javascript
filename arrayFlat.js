@@ -41,3 +41,55 @@ console.log(Array.prototype.flat.call(object));
 
 const flatMapArray = [1, 2, [3, 4, [2, 4]], 5, 6, [7, 9]];
 console.log(flatMapArray.flatMap((element) => element));
+
+
+// flat protoype using simple method and recursive call
+function flat(arr, depth = 1) {
+  if (depth <= 0) {
+    return arr; // Base case
+  }
+  
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      newArr.push(...flat(arr[i], depth - 1)); // Recursive call, flatten deeper
+    } else {
+      newArr.push(arr[i]); // Add non-array items
+    }
+  }
+  return newArr; // Return the accumulated result
+}
+
+
+// using reduce function
+function flat(arr, depth = 1) {
+  if (depth <= 0) return arr; // Base case: stop recursion
+  return arr.reduce((acc, item) => {
+    if (Array.isArray(item)) {
+      acc.push(...flat(item, depth - 1)); // Recursive call and correctly use its result
+    } else {
+      acc.push(item); // Add non-array items directly
+    }
+    return acc; // Return the accumulated array
+  }, []);
+}
+
+// custom function
+Array.prototype.customFlat = function (depth = 1) {
+    if (depth === 0) {
+        return this; // Base case: Return the array as is
+    }
+
+    const newArray = [];
+    for (let i = 0; i < this.length; i++) {
+        if (Array.isArray(this[i])) {
+            // Flatten one level and call customFlat recursively
+            newArray.push(...this[i].customFlat(depth - 1));
+        } else {
+            newArray.push(this[i]);
+        }
+    }
+
+    return newArray;
+};
+
