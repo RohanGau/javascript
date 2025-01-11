@@ -114,3 +114,36 @@ function throttle(func, wait) {
       }
     };
   }
+
+
+// advance concept with cooling period
+function throttle(func, wait, option = {leading: true, trailing: true}) {
+  let lastArgs = null;
+  let waitingPeriod = false;
+
+  function startCooling() {
+    setTimeout(() => {
+      if(lastArgs && option.trailing) {
+        func.apply(this, lastArgs);
+        lastArgs = null;
+        startCooling();
+      } else{
+        waitingPeriod = false;
+      }
+    }, wait);
+  }
+
+  return function(...args) {
+    const context = this;
+    const now = Date.now();
+    if(!waitingPeriod) {
+      if(option.leading) {
+        func.apply(context, args);
+      }
+      waitingPeriod = true;
+      startCooling();
+    } else {
+      lastArgs = args;
+    }
+  }
+}
